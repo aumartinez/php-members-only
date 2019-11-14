@@ -48,7 +48,7 @@ require_once("inc/functions.php");
               
               <div class="form-group">
                 <p>
-                  <strong>* are required</strong>
+                  <strong><span class="required">*</span> are required</strong>
                 </p>
               </div>
               
@@ -87,12 +87,12 @@ require_once("inc/functions.php");
                   Password: <span class="required">*</span>
                 </label>
                 <input class="form-control" type="password" id="password" name="password" />
-                <p>
-                  <small>min 6 characters length</small>
-                </p>
                 <p class="errorMess">
                   Password is required
                 </p>
+                <p>
+                  <small>min 6 characters length</small>
+                </p>                
               </div>
               
               <div class="form-group">
@@ -100,11 +100,11 @@ require_once("inc/functions.php");
                   Verify Password: <span class="required">*</span>
                 </label>
                 <input class="form-control" type="password" id="verify" name="verify" />
-                <p>
-                  <small>min 6 characters length</small>
-                </p>
                 <p class="errorMess">
                   Passwords don't match
+                </p>
+                <p>
+                  <small>min 6 characters length</small>
                 </p>
               </div>
               
