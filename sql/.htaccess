@@ -5,4 +5,6 @@ Deny from all
 </Files>
 
 # Disable directory browsing 
+Deny from  all
 Options -Indexes
+RedirectMatch 403 ^/folder/?$
