@@ -76,7 +76,7 @@ require_once("inc/functions.php");
                 <label for="email">
                   E-mail Address: <span class="required">*</span>
                 </label>
-                <input class="form-control" type="text" id="email" name="email" />
+                <input class="form-control" type="email" id="email" name="email" />
                 <p class="errorMess">
                   E-mail is required
                 </p>
