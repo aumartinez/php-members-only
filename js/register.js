@@ -36,6 +36,9 @@ $(document).ready(function(){
     if ($("#password").val().length == 0) {
       errors.push("password");
     }
+    else if ($("#password").val().length < 5) {
+      errors.push("password");
+    }
     
     if ($("#verify").val().length == 0) {
       errors.push("verify");
@@ -46,6 +49,20 @@ $(document).ready(function(){
       errors.push("verify");
     }
     
+    //Validate zip code (basic)
+    if ($("#zip").val()) {
+      let zip = $("#zip").val();
+      let patt = /[^0-9]/g;
+      
+      let testZip = patt.exec(zip);
+      if(testZip) {
+        errors.push("zip");
+      }
+      else if (zip.length != 5) {
+        errors.push("zip");
+      }
+    }
+    
     //Validate email
     let email = $("#email").val();
     let regExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -54,13 +71,28 @@ $(document).ready(function(){
     if (!testEmail) {
        errors.push("email");
     }
+    
+    //Validate phone number
+    if ($("#phone").val().length > 0) {
+      let phoneNumb = $("#phone").val();
       
+      //Remove any non valid character
+      phoneNumb = phoneNumb.replace(/[^0-9]/g, "");
+      
+      if (phoneNumb.length != 10) {
+        errors.push("phone");
+      }
+      if (!$("input[name=phonetype]:checked").val()) {
+        errors.push("phonetype");
+      }
+    }
+    
     return errors;
   }//End function
     
   function displayErrors(errors) {  
     for (let i = 0, len = errors.length; i < len; i++) {
-      $("#" + errors[i] + " + .errorMess").addClass("active");
+      $("#" + errors[i] + " ~ .errorMess").addClass("active");
     }      
     $("#errorDiv").html("Errors found");
   }
@@ -69,8 +101,3 @@ $(document).ready(function(){
     $(".errorMess.active").removeClass("active");
   }
 });
-
-let email = "acm_asd@hotmail.com";
-
-
-let test = regExp.exec(email);
