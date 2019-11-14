@@ -26,9 +26,18 @@ form p {
   padding: 0;
 }
 
+#errorDiv,
 .required,
 .errorMess {
   color: red;
+}
+
+.errorMess {
+  display: none;
+}
+
+.errorMess.active {
+  display: block;
 }
 
 form input,
