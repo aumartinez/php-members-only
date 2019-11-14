@@ -20,3 +20,42 @@ legend {
   padding-top: 60px;
   padding-bottom: 60px;
 }
+
+form p {
+  margin: 0;
+  padding: 0;
+}
+
+.required,
+.errorMess {
+  color: red;
+}
+
+form input,
+form select option {
+  font-size: 16px;
+}
+
+.radio-lbl,
+input.radio-input {
+  display: block;
+  float: left;
+  height: 35px;
+  line-height: 35px;
+  border: none;
+  width: auto;
+  margin: 0;
+  font-size: 16px;
+  box-shadow: none;
+  margin-left: 15px;
+}
+
+.clearer,
+.radio-group {
+  clear: both;
+  float: none;
+}
+
+form button {
+  width: 100%;
+}
