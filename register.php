@@ -144,6 +144,9 @@ require_once("inc/functions.php");
                   Zip:
                 </label>
                 <input class="form-control" type="text" id="zip" name="zip" />
+                <p class="errorMess">
+                  Use a valid zip code
+                </p>
               </div>
               
               <div class="form-group">
@@ -157,7 +160,7 @@ require_once("inc/functions.php");
               </div>
               
               <div class="form-group">
-                <label>
+                <label id="phonetype">
                   Number type:
                 </label>
                 <div class="radio-group">
@@ -171,7 +174,7 @@ require_once("inc/functions.php");
                   <label for="home" class="radio-lbl">
                     Home
                   </label>
-                </div>
+                </div>                
                 <p class="errorMess clearer">
                   Please choose an option
                 </p>
