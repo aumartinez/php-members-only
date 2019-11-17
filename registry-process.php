@@ -2,12 +2,12 @@
 
 require_once("inc/functions.php");
 
-if (!isset($_POST["submitForm"])) {
+if (!isset($_POST["formSubmit"])) {
   header("Location: register.php");
   exit();
 }
 
-$_SESSION["form"] = true;
+$_SESSION["formSubmit"] = true;
 
 if (isset($_SESSION["error"])) {
   unset($_SESSION["error"]);
@@ -57,7 +57,7 @@ if (isset($_POST["password"]) && isset($_POST["verify"])) {
 }
 
 //Additional validations
-if (isset($_POST["state"]) && $_POST["state"] != "") {
+if (isset($_POST["state"]) && strlen($_POST["state"]) > 0) {
   if (!is_valid_state($_POST["state"])) {
     $_SESSION["error"][] = "Please choose a valid state.";
   }
@@ -94,6 +94,7 @@ if (isset($_POST["phone"]) && $_POST["phone"] != "") {
 
 //Final errors check
 if (count($_SESSION["error"]) > 0) {
+  error_log("Error");
   header("Location: register.php");
   exit();
 }
@@ -102,12 +103,8 @@ else {
     unset($_SESSION["form"]);
     header("Location: success.php");    
   }
-  else {
-    $messLog = "Problem registering user: {$_POST["email"]}.";
-    $messDestination = $_SESSION["error"][] = "Problem registering account.";
-    $messHeaders = die(header("Location: register.php"));
-    error_log($messLog, $messDestination, $messHeaders);
-    
+  else {    
+    error_log("Problem registering user: {$_POST["email"]}.", $_SESSION["error"][] = "Problem registering account.", die(header("Location: register.php")));
   }
 }
 

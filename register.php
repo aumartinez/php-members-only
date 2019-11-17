@@ -127,7 +127,7 @@ require_once("inc/functions.php");
                   State:
                 </label>
                 <select class="form-control" id="state" name="state">
-                  <option>--Select--</option>
+                  <option value="">--Select--</option>
                   <option value="AL">Alabama</option>
                   <option value="CA">California</option>
                   <option value="CO">Colorado</option>
@@ -181,7 +181,7 @@ require_once("inc/functions.php");
               </div>
               
               <div class="form-group">
-                <button class="btn btn-primary" type="submit" id="submitForm" name="submitForm">
+                <button class="btn btn-primary" type="submit" id="formSubmit" name="formSubmit">
                   Submit
                 </button>
               </div>
