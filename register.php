@@ -34,7 +34,7 @@ require_once("inc/functions.php");
               <div id="errorDiv">
                 <?php
                   if (isset($_SESSION["error"]) && isset($_SESSION["formSubmit"])) {
-                    unset($_SESSION["formSubmit"])
+                    unset($_SESSION["formSubmit"]);
                     echo "\n";
                     echo "Errors found.";
                     echo "<br />\n";

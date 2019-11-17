@@ -9,7 +9,7 @@ if (!isset($_POST["submitForm"])) {
 
 $_SESSION["form"] = true;
 
-if (isset($_SESSION["error"]) {
+if (isset($_SESSION["error"])) {
   unset($_SESSION["error"]);
 }
 
@@ -25,7 +25,7 @@ $required = array(
 
 //Check required
 foreach ($required as $value) {
-  if (!(isset($_POST[$value]) || $_POST[$value] == "") {
+  if (!(isset($_POST[$value]) || $_POST[$value] == "")) {
     $_SESSION["error"][] = $value." is required";
   }
 }
@@ -39,7 +39,7 @@ if (!preg_match("/^[\w .]+$/", $_POST["lastName"])) {
   $_SESSION["error"][] = "First Name must be letter and numbers only.";
 }
 
-if (isset($_POST["email"] && $_POST["email"] != "") {
+if (isset($_POST["email"]) && $_POST["email"] != "") {
   if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     $_SESSION["error"][] = "Email is invalid.";
   }
@@ -73,7 +73,7 @@ if (isset($_POST["phone"]) && $_POST["phone"] != "") {
   if (!preg_match("/^[\d]+$/", $_POST["phone"])) {
     $_SESSION["error"][] = "Phone number should be only digits.";
   }
-  else if (strlen($_POST["phone"] < 10) {
+  else if (strlen($_POST["phone"] < 10)) {
     $_SESSION["error"][] = "Phone number must be at least 10 digits.";
   }
   
@@ -98,7 +98,7 @@ if (count($_SESSION["error"]) > 0) {
   exit();
 }
 else {
-  if(registerUser($_POST) {
+  if(registerUser($_POST)) {
     unset($_SESSION["form"]);
     header("Location: success.php");    
   }
