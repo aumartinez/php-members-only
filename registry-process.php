@@ -100,11 +100,14 @@ if (count($_SESSION["error"]) > 0) {
 }
 else {
   if(registerUser($_POST)) {
-    unset($_SESSION["form"]);
-    header("Location: success.php");    
+    unset($_SESSION["formSubmit"]);
+    unset($_SESSION["error"]);
+    header("Location: success.php");
+    exit();    
   }
   else {    
     error_log("Problem registering user: {$_POST["email"]}.", $_SESSION["error"][] = "Problem registering account.", die(header("Location: register.php")));
+    exit();
   }
 }
 
@@ -139,19 +142,19 @@ function registerUser($userData) {
   
   mysqli_free_result($query);
   
-  $firstName = mysqli_real_escape_string($_POST["firstName"]);
-  $lastName = mysqli_real_escape_string($_POST["lastName"]);
+  $firstName = mysqli_real_escape_string($conx, $_POST["firstName"]);
+  $lastName = mysqli_real_escape_string($conx, $_POST["lastName"]);
   
   $salt = "\$6\$rounds=5000\$".randomStr(8)."\$";
-  $password = mysqli_real_escape_string($_POST["password"]);
+  $password = mysqli_real_escape_string($conx, $_POST["password"]);
   $crypted = substr(crypt($password, $salt),strlen($salt));
   
-  $street = isset($_POST["address"]) ? mysqli_real_escape_string($_POST["address"]) : "";
-  $city = isset($_POST["city"]) ? mysqli_real_escape_string($_POST["city"]) : "";
-  $state = isset($_POST["state"]) ? mysqli_real_escape_string($_POST["state"]) : "";
-  $zip = isset($_POST["zip"]) ? mysqli_real_escape_string($_POST["zip"]) : "";
-  $phone = isset($_POST["phone"]) ? mysqli_real_escape_string($_POST["phone"]) : "";
-  $phonetype = isset($_POST["phonetype"]) ? mysqli_real_escape_string($_POST["phonetype"]) : "";
+  $street = isset($_POST["address"]) ? mysqli_real_escape_string($conx, $_POST["address"]) : "";
+  $city = isset($_POST["city"]) ? mysqli_real_escape_string($conx, $_POST["city"]) : "";
+  $state = isset($_POST["state"]) ? mysqli_real_escape_string($conx, $_POST["state"]) : "";
+  $zip = isset($_POST["zip"]) ? mysqli_real_escape_string($conx, $_POST["zip"]) : "";
+  $phone = isset($_POST["phone"]) ? mysqli_real_escape_string($conx, $_POST["phone"]) : "";
+  $phonetype = isset($_POST["phonetype"]) ? mysqli_real_escape_string($conx, $_POST["phonetype"]) : "";
   
   $sql = "INSERT INTO customer (
           email,
