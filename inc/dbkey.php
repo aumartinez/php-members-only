@@ -1,8 +1,8 @@
 <?php
 
 define("DBHOST", "localhost");
-define("DBUSER", "admin");
-define("DBPASS", "password");
+define("DBUSER", "root");
+define("DBPASS", "");
 define("DBNAME", "customer");
 
 ?>
