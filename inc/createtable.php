@@ -13,4 +13,6 @@ if (!$query) {
   error_log(die("SQL query error: ".mysqli_error($conx)));
 }
 
+mysqli_close($conx);
+
 ?>

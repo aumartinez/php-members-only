@@ -147,7 +147,7 @@ function registerUser($userData) {
   
   $salt = "\$6\$rounds=5000\$".randomStr(8)."\$";
   $password = mysqli_real_escape_string($_POST["password"]);
-  $crypted = crypt($password, $salt);
+  $crypted = substr(crypt($password, $salt),strlen($salt));
   
   $street = isset($_POST["address"]) ? mysqli_real_escape_string($_POST["address"]) : "";
   $city = isset($_POST["city"]) ? mysqli_real_escape_string($_POST["city"]) : "";
