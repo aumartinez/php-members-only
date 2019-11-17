@@ -1,8 +1,3 @@
--- SQL statements
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET TIME_ZONE = "+00:00";
-
 -- Create table
 
 CREATE TABLE IF NOT EXISTS customer (

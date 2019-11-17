@@ -6,7 +6,7 @@ if (!$conx) {
   error_log(die("MySQL connection failed: ".mysqli_errno()));
 }
 
-$sql = file_get_contents("inc/createtable.sql");
+$sql = file_get_contents("sql/createtable.sql");
 $query = mysqli_query($conx, $sql);
 
 if (!$query) {

@@ -1,5 +1,5 @@
 <?php
-//require_once("inc/createtable.php");
+require_once("inc/createtable.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,6 +34,10 @@
           <div class="meter">
             <span></span>
           </div>
+          
+          <p id="message">
+            
+          </p>
         </div>
       </div>
     </div>
@@ -42,6 +46,6 @@
     <script src="js/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/register.js"></script>
+    <script src="js/startup.js"></script>
   </body>
 </html>
