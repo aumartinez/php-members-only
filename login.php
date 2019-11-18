@@ -25,13 +25,13 @@ require_once("inc/functions.php");
     <div class="container">
       <div class="row">
         <div class="col-sm-4 col-center wrapper">
-          <form id="loginForm">
+          <form id="loginForm" action="login-process.php" method="post">
             <fieldset>
               <legend>
                 Login
               </legend>
               
-              <div id="errorDiv" action="login-process.php" method="post">
+              <div id="errorDiv">
                 <?php
                   if (isset($_SESSION["error"]) && isset($_SESSION["formSubmit"])) {
                     unset($_SESSION["formSubmit"]);
