@@ -47,8 +47,11 @@ form p {
 }
 
 form input,
+form button.btn,
+form input.form-control,
 form select option {
   font-size: 16px;
+  height: 35px;
 }
 
 .radio-lbl,
