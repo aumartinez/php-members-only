@@ -50,6 +50,8 @@ class User {
     
     if ($crypted != $result["password"]) {
       error_log("Password for {$user} don't match");
+      mysqli_free_result($query);
+      mysqli_close($conx);
       return false;
     }
     
@@ -65,6 +67,9 @@ class User {
     $this->isLoggedIn = true;
     
     $this->_setSession();
+    
+    mysqli_free_result($query);
+    mysqli_close($conx);
     
     return true;
   }// End authenticate
