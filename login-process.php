@@ -35,11 +35,12 @@ if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
 
 if (count($_SESSION["error"]) > 0) {
   header("Location: login.php");
+  exit();
 }
 else {
   $user = new User();
   
-  if ($user->authenticate($_POST["email"], $POST["password"])) {
+  if ($user->authenticate($_POST["email"], $_POST["password"])) {
     unset($_SESSION["formSubmit"]);
     header("Location: index.php");
     exit();
