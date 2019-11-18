@@ -37,7 +37,6 @@ $(document).ready(function(){
        errors.push("email");
     }
     
-    
     return errors;
   }//End function
     
