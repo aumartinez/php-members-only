@@ -69,6 +69,12 @@ $user->logout();
               </div>
               
               <div class="form-group">
+                <p>
+                  <a href="recovery.php">Forgot your password?</a>
+                </p>
+              </div>
+              
+              <div class="form-group">
                 <button class="btn btn-primary" type="submit" id="submitForm" name="submitForm">
                   Login
                 </button>
