@@ -24,7 +24,7 @@ require_once("inc/functions.php");
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4 col-center">
+        <div class="col-sm-4 col-center wrapper">
           <form id="userForm" action="registry-process.php" method="post">
             <fieldset>
               <legend>
