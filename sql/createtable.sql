@@ -1,4 +1,4 @@
--- Create table
+-- Create tables
 
 CREATE TABLE IF NOT EXISTS customer (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -14,4 +14,12 @@ CREATE TABLE IF NOT EXISTS customer (
   zip CHAR(10),
   phone VARCHAR(25),
   phone_type VARCHAR(255)  
+) ENGINE = MyISAM DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1;
+
+CREATE TABLE IF NOT EXISTS resetPassword (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  email_id INT,
+  pass_key VARCHAR(255),
+  create_date DATETIME,
+  status VARCHAR(255)
 ) ENGINE = MyISAM DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci AUTO_INCREMENT = 1;
