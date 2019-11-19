@@ -23,14 +23,14 @@ class User {
     }
   }//End __construct
   
-  public function authenticate($user, $pass) {
+  public function authenticate($username, $pass) {
     $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
     if (!$conx) {
       error_log("MySQL connect error: ".mysqli_connect_error());
       return false;
     }
     
-    $regUser = mysqli_real_escape_string($conx, $user);
+    $regUser = mysqli_real_escape_string($conx, $username);
     $password = mysqli_real_escape_string($conx, $pass);
     
     $sql = "SELECT *
@@ -39,7 +39,7 @@ class User {
     
     $query = mysqli_query($conx, $sql);
     if (!$query) {
-      error_log("Cannot reach the account for {$user}");
+      error_log("Cannot reach the account for {$username}");
       return false;
     }
     
@@ -49,7 +49,7 @@ class User {
     $crypted = substr($crypted,strlen($salt));
     
     if ($crypted != $result["password"]) {
-      error_log("Password for {$user} don't match");
+      error_log("Password for {$username} don't match");
       mysqli_free_result($query);
       mysqli_close($conx);
       return false;
@@ -66,7 +66,7 @@ class User {
     $this->phoneType = $result["phone_type"];
     $this->isLoggedIn = true;
     
-    $this->_setSession();
+    $this->setSession();
     
     mysqli_free_result($query);
     mysqli_close($conx);
@@ -74,7 +74,7 @@ class User {
     return true;
   }// End authenticate
   
-  private function _setSession() {
+  private function setSession() {
     if (session_id() == "") {
       session_start();
     }
@@ -93,7 +93,7 @@ class User {
     
   }//End _setSession
   
-  private function _initUser() {
+  private function initUser() {
     if (session_id() == "") {
       session_start();
     }
@@ -111,6 +111,6 @@ class User {
     $this->isLoggedIn = $_SESSION["isLoggedIn"];
     
   }//End initUser
-}
+}//End class User
 
 ?>
