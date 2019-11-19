@@ -41,12 +41,12 @@ else {
   $user = new User();
   
   if ($user->authenticate($_POST["email"], $_POST["password"])) {
-    unset($_SESSION["formSubmit"]);
+    unset($_SESSION["submitForm"]);
     header("Location: index.php");
     exit();
   }
   else {
-    $_SESSION["error"][] = "There was a problem with your user or password.";
+    $_SESSION["error"][] = "User couldn't be authenticated, try again.";
     header("Location: login.php");
     exit();
   }
