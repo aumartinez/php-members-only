@@ -2,8 +2,7 @@
 require_once("inc/functions.php");
 $user = new User();
 
-if (!$user->isLoggedIn) {
-  $_SESSION["error"][] = "You need to log in first.";
+if (!$user->isLoggedIn) {  
   header("Location: login.php");
   exit();
 }
