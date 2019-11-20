@@ -240,7 +240,7 @@ class User {
     ';
     
     $to = $result["email"];
-    $subject = "Passwrod reset requested";
+    $subject = "Password reset requested";
     $txt = $emailbody;
     $headers = array(
                 "MIME-Version: 1.0",
