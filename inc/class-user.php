@@ -12,6 +12,7 @@ class User {
   public $phone;
   public $phoneType;
   public $isLoggedIn = false;
+  public $errorType = "fatal";
   
   function __construct() {
     if (session_id() == "") {
@@ -30,16 +31,16 @@ class User {
       return false;
     }
     
-    $regUser = mysqli_real_escape_string($conx, $username);
+    $user = mysqli_real_escape_string($conx, $username);
     $password = mysqli_real_escape_string($conx, $pass);
     
     $sql = "SELECT *
             FROM customer
-            WHERE email = '{$regUser}'";
+            WHERE email = '{$user}'";
     
     $query = mysqli_query($conx, $sql);
     if (!$query) {
-      error_log("Cannot reach the account for {$username}");
+      error_log("Cannot reach the account for {$user}");
       return false;
     }
     
@@ -47,6 +48,7 @@ class User {
     $salt = $result["salt"];
     $crypted = crypt($password, $salt);
     $crypted = substr($crypted,strlen($salt));
+    $crypted = mysqli_real_escape_string($conx, $crypted);
     
     if ($crypted != $result["password"]) {
       error_log("Password for {$username} don't match");
@@ -134,8 +136,8 @@ class User {
     }
     
     session_destroy();
-  }
-  
+  }//End logout
+    
   public function emailPass($username) {
     $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
     if (!$conx) {
@@ -143,7 +145,7 @@ class User {
       return false;
     }
     
-    $user = mysqli_real_escape_string($username);
+    $user = mysqli_real_escape_string($conx, $username);
     $sql = "SELECT id, email
             FROM customer
             WHERE email = '{$user}'";
@@ -156,10 +158,10 @@ class User {
       return false;
     }
     
-    $result = mysqli_fetch_row($query);
+    $rows = mysqli_num_rows($query);
     
-    if ($result == 0) {
-      $_SESSION["error"][] = "User with {$user} email not found."
+    if ($rows == 0) {
+      $_SESSION["error"][] = "User with {$user} email not found.";
       mysqli_free_result($query);
       mysqli_close($conx);
       return false;
@@ -167,6 +169,8 @@ class User {
     
     $result = mysqli_fetch_assoc($query);
     $id = $result["id"];
+    
+    mysqli_free_result($query);
     
     $hash = uniqid("", TRUE);
     $hash = md5($hash);
@@ -190,7 +194,7 @@ class User {
     
     if (!$insert) {
       error_log("Couldn't insert data for ".$id);
-      $_SESSION["error"][] = "MySQL error: ".mysqli_errno();
+      $_SESSION["error"][] = "Couldn't insert data for ".$id;      
       mysqli_close($conx);
       return false;
     }
@@ -198,11 +202,11 @@ class User {
     $urlHash = urlencode($hash);
     
     $serverUrl = isset($_SERVER["HTTPS"]) ? "https://" : "http://";
-    $serverUrl .= $_SERVER["SEVER_NAME"];
+    $serverUrl .= $_SERVER["SERVER_NAME"];
     
     $str = $_SERVER["PHP_SELF"];
     $arr = explode("/", $str);
-    $str = array();
+    $str = array("");
     
     for ($i = 0; $i < count($arr); $i++) {
       if ($i == (count($arr) - 1)) {
@@ -215,7 +219,7 @@ class User {
     $str = substr($str, 1);
     
     $serverUrl .= $str; //Script path
-    $serverUrl .= "/reset.php";
+    $serverUrl .= "/reset.php?user=" . $urlHash;
     
     $emailbody = '
       <!doctype html>
@@ -252,7 +256,98 @@ class User {
                 
     $headers = implode("\r\n", $headers);
     $sendemail = mail($to, $subject, $txt, $headers);
+    
+    return true;
   }//End emailPass
+  
+  public function validateReset($data) {
+    $password = $data["password"];
+    $verify = $data["verify"];
+    
+    if ($password != $verify) {
+      $this->errorType = "nonfatal";
+      $_SESSION["error"][] = "Passwords don't match";
+      return false;
+    }
+    
+    $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
+    if (!$conx) {
+      error_log("MySQL connect error: ".mysqli_connect_error());
+      return false;
+    }
+    
+    $decoded = urldecode($data["hash"]);
+    $email = mysqli_real_escape_string($conx, $data["email"]);
+    $hash = mysqli_real_escape_string($conx, $decoded);
+    
+    $sql = "SELECT c.id AS id, c.email AS email, c.salt AS salt
+            FROM customer AS c, resetPassword AS r
+            WHERE r.status = 'A' 
+            AND r.pass_key = '{$hash}' 
+            AND c.email = '{$email}'
+            AND c.id = r.email_id";
+    
+   $query = mysqli_query($conx, $sql);
+   
+   if (!$query) {
+     $_SESSION["error"][] = "Error: ".mysqli_errno();
+     error_log("Database error: ".$data["email"]." - ".$data["hash"]);
+     mysqli_free_result($query);
+     mysqli_close($conx);
+     return false;
+   }
+   else if ($row = mysqli_fetch_row($query) == 0) {
+     $_SESSION["error"][] = "Link not active or user not found.";
+     $this->errorType = "fatal";
+     error_log("Link not active: ".$data["email"]." - ".$data["hash"]);
+     return false;
+   }
+   else {
+     $result = mysqli_fetch_assoc($query);
+     $id = $result["id"];
+     $salt = $result["salt"];
+     $password = mysqli_real_escape_string($conx, $password);
+     
+     if ($this->resetPass($id, $password, $salt)) {
+       return true;
+     }
+     else {
+       $this->errorType = "nonfatal";
+       $_SESSION["error"][] = "Error resetting the password.";
+       error_log("Error resetting the password: ".$id);
+       return false;
+     }
+   }
+    
+  }//End validate reset
+    
+  private function resetPass($id, $password, $salt) {
+  
+    $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
+    if (!$conx) {
+      error_log("MySQL connect error: ".mysqli_connect_error());
+      return false;
+    }
+        
+    $crypted = crypt($password, $salt);
+    $crypted = substr($crypted,strlen($salt));
+    $crypted = mysqli_real_escape_string($conx, $crypted);
+    $id = mysqli_real_escape_string($conx, $id);
+        
+    $sql = "UPDATE customer 
+            SET password = '{$crypted}'
+            WHERE id = '{$id}'";
+    
+    $update = mysqli_query($conx, $sql);
+    if (!$update) {
+      mysqli_close($conx);
+      return false;
+    }
+    else {
+      return true;
+    }
+    
+  }
   
   
 }//End class User
