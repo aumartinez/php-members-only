@@ -12,7 +12,16 @@ if (isset($_GET["user"]) && $_GET["user"] != "") {
 //If password reset submit form failed
 if (isset($_SESSION["submitForm"]) && $_SESSION["submitForm"] == true) {
   $invalidAccess = false;
-  $hash = $_SESSION["hash"];
+  if(isset($_SESSION["hash"]) && $_SESSION["hash"] != "") {
+      $hash = $_SESSION["hash"];
+  }
+  else if (isset($_GET["user"]) && $_GET["user"] !== "") {
+      $hash = $_GET["user"];
+  }
+  else{
+      $hash = "";
+      $_SESSION["error"][] = "Invalid access";
+  }
 }
 
 if ($invalidAccess) {
