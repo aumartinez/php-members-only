@@ -45,8 +45,7 @@ else {
     exit();
   }
   else {    
-    $_SESSION["error"][] = "Email address couldn't be located";
-    print_r($_SESSION["error"]);
+    $_SESSION["error"][] = "Email address couldn't be located";    
     //header("Location: recovery.php");
     exit();
   }
