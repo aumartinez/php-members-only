@@ -23,7 +23,7 @@ $required = array(
 
 //Check required
 foreach ($required as $value) {
-  if (!(isset($_POST[$value]) || $_POST[$value] == "")) {
+  if (!isset($_POST[$value]) || $_POST[$value] == "") {
     $_SESSION["error"][] = $value." is required";
   }
 }
@@ -45,7 +45,7 @@ else {
     header("Location: index.php");
     exit();
   }
-  else {
+  else {    
     $_SESSION["error"][] = "User couldn't be authenticated, try again.";
     header("Location: login.php");
     exit();
