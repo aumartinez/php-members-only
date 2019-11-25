@@ -1,7 +1,6 @@
 <?php
 require_once("inc/functions.php");
-$user = new User();
-$user->logout();
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,15 +26,15 @@ $user->logout();
     <div class="container">
       <div class="row">
         <div class="col-sm-4 col-center wrapper">
-          <form id="loginForm">
+          <form id="loginForm" action="login-process.php" method="post">
             <fieldset>
               <legend>
                 Login
               </legend>
               
-              <div id="errorDiv" action="login-process.php" method="post">
+              <div id="errorDiv">
                 <?php
-                  if (isset($_SESSION["error"]) && isset($_SESSION["formSubmit"])) {
+                  if (isset($_SESSION["error"]) || isset($_SESSION["formSubmit"])) {
                     unset($_SESSION["formSubmit"]);
                     echo "Errors found";
                     echo "<br />\n";
