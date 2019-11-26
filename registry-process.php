@@ -39,12 +39,14 @@ if (!preg_match("/^[\w .]+$/", $_POST["lastName"])) {
   $_SESSION["error"][] = "First Name must be letter and numbers only.";
 }
 
+//Validate email
 if (isset($_POST["email"]) && $_POST["email"] != "") {
   if(!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
     $_SESSION["error"][] = "Email is invalid.";
   }
 }
 
+//Validate password match
 if (isset($_POST["password"]) && isset($_POST["verify"])) {
   if ($_POST["password"] != "" && $_POST["verify"] != "") {
     if ($_POST["password"] != $_POST["verify"]) {
@@ -100,7 +102,7 @@ if (count($_SESSION["error"]) > 0) {
 }
 else {
   if(registerUser($_POST)) {
-    unset($_SESSION["formSubmit"]);
+    unset($_SESSION["submitForm"]);
     unset($_SESSION["error"]);
     header("Location: success.php");
     exit();    
@@ -112,7 +114,7 @@ else {
 }
 
 
-function registerUser($userData) {
+function registerUser($form) {
   $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
   if (!$conx) {
     $messLog = "MySQL connection failed: ".mysqli_connect_errno();
@@ -120,7 +122,7 @@ function registerUser($userData) {
     return false;
   }
   
-  $email = mysqli_real_escape_string($conx, $_POST["email"]);
+  $email = mysqli_real_escape_string($conx, $form["email"]);
   
   $sql = "SELECT id 
           FROM customer
