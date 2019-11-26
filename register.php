@@ -33,8 +33,8 @@ require_once("inc/functions.php");
               
               <div id="errorDiv">
                 <?php
-                  if (isset($_SESSION["error"]) && isset($_SESSION["formSubmit"])) {
-                    unset($_SESSION["formSubmit"]);
+                  if (isset($_SESSION["error"]) && isset($_SESSION["submitForm"])) {
+                    unset($_SESSION["submitForm"]);
                     echo "\n";
                     echo "Errors found.";
                     echo "<br />\n";
@@ -181,7 +181,7 @@ require_once("inc/functions.php");
               </div>
               
               <div class="form-group">
-                <button class="btn btn-primary" type="submit" id="formSubmit" name="formSubmit">
+                <button class="btn btn-primary" type="submit" id="submitForm" name="submitForm">
                   Submit
                 </button>
               </div>
