@@ -2,12 +2,12 @@
 
 require_once("inc/functions.php");
 
-if (!isset($_POST["formSubmit"])) {
+if (!isset($_POST["submitForm"])) {
   header("Location: register.php");
   exit();
 }
 
-$_SESSION["formSubmit"] = true;
+$_SESSION["submitForm"] = true;
 
 if (isset($_SESSION["error"])) {
   unset($_SESSION["error"]);
@@ -25,7 +25,7 @@ $required = array(
 
 //Check required
 foreach ($required as $value) {
-  if (!(isset($_POST[$value]) || $_POST[$value] == "")) {
+  if (!isset($_POST[$value]) || $_POST[$value] == "") {
     $_SESSION["error"][] = $value." is required";
   }
 }
