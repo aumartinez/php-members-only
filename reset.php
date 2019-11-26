@@ -13,14 +13,14 @@ if (isset($_GET["user"]) && $_GET["user"] != "") {
 if (isset($_SESSION["submitForm"]) && $_SESSION["submitForm"] == true) {
   $invalidAccess = false;
   if(isset($_SESSION["hash"]) && $_SESSION["hash"] != "") {
-      $hash = $_SESSION["hash"];
+    $hash = $_SESSION["hash"];
   }
   else if (isset($_GET["user"]) && $_GET["user"] !== "") {
-      $hash = $_GET["user"];
+    $hash = $_GET["user"];
   }
   else{
-      $hash = "";
-      $_SESSION["error"][] = "Invalid access";
+    $hash = "";
+    $_SESSION["error"][] = "Invalid access";
   }
 }
 
@@ -62,8 +62,8 @@ if ($invalidAccess) {
               
               <div id="errorDiv">
                 <?php
-                  if (isset($_SESSION["error"]) && isset($_SESSION["formSubmit"])) {
-                    unset($_SESSION["formSubmit"]);
+                  if (isset($_SESSION["error"]) && isset($_SESSION["submitForm"])) {
+                    unset($_SESSION["submitForm"]);
                     echo "\n";
                     echo "Errors found.";
                     echo "<br />\n";
