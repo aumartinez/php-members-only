@@ -120,7 +120,7 @@ if ($invalidAccess) {
               <div class="form-group">
                 <?php
                   echo "\n";
-                  echo "<input type=\"hidden\" name=\"hash\" value=\"{$hash}\" />\n";
+                  echo "<input type=\"hidden\" id=\"hash\" name=\"hash\" value=\"{$hash}\" />\n";
                 ?>
               </div>
               
