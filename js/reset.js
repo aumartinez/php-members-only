@@ -2,7 +2,7 @@
 $(document).ready(function(){
   //To Do
   
-  $("#loginForm").submit(function(evt){
+  $("#resetForm").submit(function(evt){
     let errors = validateForm();
     
     if (errors.length == 0) {      
