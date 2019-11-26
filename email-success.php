@@ -24,7 +24,7 @@
   <body>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4 col-center wrapper">
+        <div class="col-sm-6 col-center wrapper">
           <h1>
             Password reset instructions will be e-mailed to you
           </h1>
