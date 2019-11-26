@@ -36,7 +36,7 @@ $(document).ready(function(){
     if ($("#password").val().length == 0) {
       errors.push("password");
     }
-    else if ($("#password").val().length < 5) {
+    else if ($("#password").val().length < 6) {
       errors.push("password");
     }
     
