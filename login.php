@@ -70,7 +70,13 @@ $user->notLoggedIn();
               
               <div class="form-group">
                 <p>
-                  <a href="recovery.php">Forgot your password?</a>
+                  <a href="recovery.php" title="Forgot password">Forgot your password?</a>
+                </p>
+              </div>
+              
+              <div class="form-group">
+                <p>
+                  Not registered? Click <a href="register.php" title="Register">here</a> to register!
                 </p>
               </div>
               
