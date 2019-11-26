@@ -1,6 +1,7 @@
 <?php
 require_once("inc/functions.php");
-
+$user = new User();
+$user->logout();
 ?>
 <!doctype html>
 <html lang="en">
@@ -34,8 +35,8 @@ require_once("inc/functions.php");
               
               <div id="errorDiv">
                 <?php
-                  if (isset($_SESSION["error"]) || isset($_SESSION["formSubmit"])) {
-                    unset($_SESSION["formSubmit"]);
+                  if (isset($_SESSION["error"]) && isset($_SESSION["submitForm"])) {
+                    unset($_SESSION["submitForm"]);
                     echo "Errors found";
                     echo "<br />\n";
                     
