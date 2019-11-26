@@ -7,8 +7,11 @@ if (!isset($_POST["submitForm"])) {
   exit();
 }
 
-$_SESSION["submitForm"] = true;
+if (isset($_SESSION["submitForm"])) {
+  unset($_SESSION["submitForm"]);
+}
 
+$_SESSION["submitForm"] = true;
 
 if (isset($_SESSION["error"])) {  
   unset($_SESSION["error"]);
