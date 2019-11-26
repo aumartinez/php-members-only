@@ -114,6 +114,11 @@ class User {
     
   }//End initUser
   
+  public function notLoggedIn() {
+    $this->isLoggedIn = false;
+    $_SESSION["isLoggedIn"] = false;
+  }
+  
   public function logout() {
     $this->isLoggedIn = false;
     
@@ -123,14 +128,14 @@ class User {
     
     $_SESSION["isLoggedIn"] = false;
     
-    foreach($_SESSION as $key => $value) {
+    foreach($_SESSION as $key => $value) {      
       $_SESSION[$key] = "";
       unset($_SESSION[$key]);
     }
     
     $_SESSION = array();
     
-    if (ini_get("seesion.use_cookies")) {
+    if (ini_get("session.use_cookies")) {
       $cookieParameters = session_get_cookie_params();
       setcookie(session_name(), "", time() - 28800, $cookieParameters["path"], $cookieParameters["domain"], $cookieParameters["secure"], $cookieParameters["httponly"]);
     }
@@ -263,6 +268,7 @@ class User {
   public function validateReset($data) {
     $password = $data["password"];
     $verify = $data["verify"];
+    $hash = $data["hash"];
     
     if ($password != $verify) {
       $this->errorType = "nonfatal";
@@ -272,18 +278,19 @@ class User {
     
     $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
     if (!$conx) {
+      $_SESSION["error"][] = "Couldn't process request.";
       error_log("MySQL connect error: ".mysqli_connect_error());
       return false;
     }
     
-    $decoded = urldecode($data["hash"]);
+    $decoded = urldecode($hash);
     $email = mysqli_real_escape_string($conx, $data["email"]);
     $hash = mysqli_real_escape_string($conx, $decoded);
     
     $sql = "SELECT c.id AS id, c.email AS email, c.salt AS salt
             FROM customer AS c, resetPassword AS r
             WHERE r.status = 'A' 
-            AND r.pass_key = '{$hash}' 
+            AND r.pass_key = '{$hash}'
             AND c.email = '{$email}'
             AND c.id = r.email_id";
     
@@ -296,7 +303,7 @@ class User {
      mysqli_close($conx);
      return false;
    }
-   else if ($row = mysqli_fetch_row($query) == 0) {
+   else if (mysqli_num_rows($query) == 0) {
      $_SESSION["error"][] = "Link not active or user not found.";
      $this->errorType = "fatal";
      error_log("Link not active: ".$data["email"]." - ".$data["hash"]);
@@ -308,7 +315,7 @@ class User {
      $salt = $result["salt"];
      $password = mysqli_real_escape_string($conx, $password);
      
-     if ($this->resetPass($id, $password, $salt)) {
+     if ($this->resetPass($id, $password, $salt, $hash)) {
        return true;
      }
      else {
@@ -321,7 +328,7 @@ class User {
     
   }//End validate reset
     
-  private function resetPass($id, $password, $salt) {
+  private function resetPass($id, $password, $salt, $hash) {
   
     $conx = mysqli_connect(DBHOST, DBUSER, DBPASS, DBNAME);
     if (!$conx) {
@@ -339,14 +346,24 @@ class User {
             WHERE id = '{$id}'";
     
     $update = mysqli_query($conx, $sql);
+    
     if (!$update) {
       mysqli_close($conx);
       return false;
     }
-    else {
-      return true;
+    
+    $sql = "UPDATE resetPassword
+            SET status = 'U'
+            WHERE pass_key = '{$hash}'";
+    
+    $update = mysqli_query($conx, $sql);
+    
+    if (!$update) {
+      mysqli_close($conx);
+      return false;
     }
     
+    return true;
   }
   
   
