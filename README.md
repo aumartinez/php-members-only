@@ -9,6 +9,8 @@ Validations are implemented in both sides of the application, in the frontend us
 
 ## Previews
 
+In the Screenshots folder.
+
 ## Live URL
 
 Please feel free to play around with it.
