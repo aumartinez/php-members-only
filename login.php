@@ -1,7 +1,7 @@
 <?php
 require_once("inc/functions.php");
 $user = new User();
-$user->logout();
+$user->notLoggedIn();
 ?>
 <!doctype html>
 <html lang="en">
