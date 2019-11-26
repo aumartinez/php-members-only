@@ -57,12 +57,12 @@ else {
     if ($user->errorType = "nonfatal") {
       $_SESSION["hash"] = $_POST["hash"];
       $_SESSION["error"][] = "There was a problem with the form.";
-      header("reset.php");
+      header("Location: reset.php");
       exit();
     }
     else {
       $_SESSION["error"][] = "The request couldn't' be processed.";
-      header("Location: recovery.php");
+      header("Location: reset.php");
       exit();
     }
   }
