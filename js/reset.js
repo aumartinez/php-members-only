@@ -29,7 +29,7 @@ $(document).ready(function(){
     }
     
     if ($("#verify").val().length == 0) {
-      errors.push("password");
+      errors.push("verify");
     }
     
     //Validate email
