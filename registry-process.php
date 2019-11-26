@@ -32,11 +32,11 @@ foreach ($required as $value) {
 
 //Validate firstName and lastName
 if (!preg_match('/^[\w .]+$/', $_POST["firstName"])) {
-  $_SESSION["error"][] = "First Name must be letter and numbers only.";
+  $_SESSION["error"][] = "First name must be letter and numbers only.";
 }
 
 if (!preg_match("/^[\w .]+$/", $_POST["lastName"])) {
-  $_SESSION["error"][] = "First Name must be letter and numbers only.";
+  $_SESSION["error"][] = "Last name must be letter and numbers only.";
 }
 
 //Validate email
