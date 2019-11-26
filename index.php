@@ -2,7 +2,7 @@
 require_once("inc/functions.php");
 $user = new User();
 
-if (!$user->isLoggedIn) {  
+if (!$user->isLoggedIn) {
   header("Location: login.php");
   exit();
 }
