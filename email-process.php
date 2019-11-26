@@ -9,7 +9,6 @@ if (!isset($_POST["submitForm"])) {
 
 $_SESSION["submitForm"] = true;
 
-
 if (isset($_SESSION["error"])) {  
   unset($_SESSION["error"]);
 }
@@ -45,8 +44,8 @@ else {
     exit();
   }
   else {    
-    $_SESSION["error"][] = "Email address couldn't be located";    
-    //header("Location: recovery.php");
+    $_SESSION["error"][] = "Email address couldn't be located";
+    header("Location: recovery.php");
     exit();
   }
 }
