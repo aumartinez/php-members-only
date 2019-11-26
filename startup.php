@@ -36,7 +36,6 @@ require_once("inc/createtable.php");
           </div>
           
           <p id="message">
-            
           </p>
         </div>
       </div>
