@@ -8,7 +8,7 @@ require_once("inc/functions.php");
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Index</title>
+    <title>Password Recovery</title>
     
     <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
@@ -25,7 +25,7 @@ require_once("inc/functions.php");
     <div class="container">
       <div class="row">
         <div class="col-sm-4 col-center wrapper">
-          <form id="emailForm" action="email-process.php" action="post">
+          <form id="emailForm" action="email-process.php" method="post">
             <fieldset>
               <legend>
                 Password Recovey
@@ -33,8 +33,8 @@ require_once("inc/functions.php");
               
               <div id="errorDiv">
                 <?php
-                  if (isset($_SESSION["error"]) && isset($_SESSION["formSubmit"])) {
-                    unset($_SESSION["formSubmit"]);
+                  if (isset($_SESSION["error"]) && isset($_SESSION["submitForm"])) {
+                    unset($_SESSION["submitForm"]);
                     echo "\n";
                     echo "Errors found.";
                     echo "<br />\n";
