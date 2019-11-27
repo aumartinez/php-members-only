@@ -16,7 +16,7 @@ In the Screenshots folder.
 1- Validate all user input always, in the FrontEnd and in the BackEnd
 2- Separate form process scripts from input pages
 3- Redirect authentications/validations appropriately
-4- User a class object to group methods
+4- Use a class object to group methods
 
 ## Live URL
 
