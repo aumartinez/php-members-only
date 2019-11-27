@@ -14,8 +14,11 @@ In the Screenshots folder.
 ## Conventions/Practices followed
 
 1- Validate all user input always, in the FrontEnd and in the BackEnd
+
 2- Separate form process scripts from input pages
+
 3- Redirect authentications/validations appropriately
+
 4- Use a class object to group methods
 
 ## Live URL
