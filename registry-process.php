@@ -122,7 +122,7 @@ function registerUser($form) {
     return false;
   }
   
-  $email = mysqli_real_escape_string($conx, $form["email"]);
+  $email = mysqli_real_escape_string($conx, $_POST["email"]);
   
   $sql = "SELECT id 
           FROM customer
