@@ -7,6 +7,8 @@ This is more an example on how to use PHP and sessions variables to validate and
 
 Validations are implemented in both sides of the application, in the frontend using JS and in the backend with PHP.
 
+Run the startup.php file to setup the tables in the database, dbkey.php should the credentials to access the database.
+
 ## Previews
 
 In the Screenshots folder.
