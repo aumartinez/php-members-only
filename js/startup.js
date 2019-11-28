@@ -9,8 +9,8 @@ $(document).ready(function(){
   
       if (outDivWidth == innDivWidth) {
         clearInterval(checkWidth);
-        let message = "Database tables are ready.";
-        $("#message").text(message);
+        let message = "Database tables are ready. Go to the <a href=\"index.php\">start</a> page.";
+        $("#message").html(message);
       }
     }, 1000);
     
